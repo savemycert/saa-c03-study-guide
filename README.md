@@ -1,6 +1,6 @@
 # SAA-C03 Study Guide: AWS Certified Solutions Architect – Associate
 
-A free, open study guide for the **AWS Certified Solutions Architect – Associate (SAA-C03)** exam. It covers every domain and topic in the official exam guide as a checklist, lists the facts worth memorizing, and links each topic to a full free lesson.
+A free, open study guide for the **AWS Certified Solutions Architect – Associate (SAA-C03)** exam: revision notes for every domain, side-by-side comparisons of commonly confused services, a glossary, 20 worked sample questions, and the official syllabus as a checklist with a full free lesson for every topic.
 
 Maintained by [SaveMyCert](https://www.savemycert.com/?utm_source=github&utm_medium=readme&utm_campaign=saa-c03-study-guide), where you can read every lesson free, [practice with explained questions](https://www.savemycert.com/practice/aws-solutions-architect-associate/?utm_source=github&utm_medium=readme&utm_campaign=saa-c03-study-guide) and [take timed mock exams](https://www.savemycert.com/mocks/aws-solutions-architect-associate/?utm_source=github&utm_medium=readme&utm_campaign=saa-c03-study-guide).
 
@@ -8,6 +8,7 @@ Maintained by [SaveMyCert](https://www.savemycert.com/?utm_source=github&utm_med
 
 - [Exam at a glance](#exam-at-a-glance)
 - [Exam domains](#exam-domains)
+- [What is in this repo](#what-is-in-this-repo)
 - [Syllabus checklist](#syllabus-checklist)
   - [Domain 1: Design Secure Architectures](#domain-1-design-secure-architectures)
   - [Domain 2: Design Resilient Architectures](#domain-2-design-resilient-architectures)
@@ -43,6 +44,19 @@ Exam details change. Always confirm them in the official [AWS Certified Solution
 
 That is 4 domains and 14 topics. Spend your time in proportion to the weights: the heaviest domain decides more of your score than the lightest.
 
+## What is in this repo
+
+| File | What it gives you |
+|---|---|
+| [Domain 1 notes](notes/domain-1-design-secure-architectures.md) | Design Secure Architectures: condensed revision notes per topic |
+| [Domain 2 notes](notes/domain-2-design-resilient-architectures.md) | Design Resilient Architectures: condensed revision notes per topic |
+| [Domain 3 notes](notes/domain-3-design-high-performing-architectures.md) | Design High-Performing Architectures: condensed revision notes per topic |
+| [Domain 4 notes](notes/domain-4-design-cost-optimized-architectures.md) | Design Cost-Optimized Architectures: condensed revision notes per topic |
+| [Commonly confused services](comparisons.md) | Side-by-side tables of the services questions set against each other |
+| [Glossary](glossary.md) | Every in-scope term and service in one sentence |
+| [Sample questions](sample-questions.md) | 20 worked questions with answers and reasoning |
+| [Exam-day guide](exam-day-guide.md) | Booking, testing options, scoring, results and retakes |
+
 ## Syllabus checklist
 
 Tick each topic off once you can explain it without notes. The "Must know" facts are the ones questions turn on. Each lesson link goes to the complete, free lesson.
@@ -50,6 +64,8 @@ Tick each topic off once you can explain it without notes. The "Must know" facts
 ### Domain 1: Design Secure Architectures
 
 **Weight: 30%.** Secure access to AWS resources, secure workloads and applications, and the right data-security controls.
+
+📝 Revision notes: [Domain 1: Design Secure Architectures](notes/domain-1-design-secure-architectures.md)
 
 - [ ] **1.1 Design secure access to AWS resources**
   <br>Multi-account access control with AWS Organizations, Control Tower, and SCPs; federated and role-based access (IAM, IAM Identity Center, STS, role switching, cross-account roles); least privilege, root-user hardening and MFA, resource policies, directory federation, and the shared responsibility model.
@@ -71,6 +87,8 @@ Tick each topic off once you can explain it without notes. The "Must know" facts
 
 **Weight: 26%.** Scalable, loosely coupled designs and highly available, fault-tolerant architectures measured against RTO and RPO.
 
+📝 Revision notes: [Domain 2: Design Resilient Architectures](notes/domain-2-design-resilient-architectures.md)
+
 - [ ] **2.1 Design scalable and loosely coupled architectures**
   <br>Event-driven, microservice, and multi-tier designs; decoupling with SQS and pub/sub messaging, API Gateway, and Step Functions orchestration; when to choose serverless (Lambda, Fargate) vs containers (ECS, EKS) and migrating apps into containers; horizontal vs vertical scaling, load balancing (ALB), caching, edge accelerators (CDN), read replicas, and storage types (object, file, block).
   - 📖 Lesson: [Scalable, Loosely Coupled Architectures: SQS, SNS, EventBridge, Step Functions](https://www.savemycert.com/revision/aws-solutions-architect-associate/aws-scalable-loosely-coupled-architectures/?utm_source=github&utm_medium=readme&utm_campaign=saa-c03-study-guide)
@@ -85,6 +103,8 @@ Tick each topic off once you can explain it without notes. The "Must know" facts
 ### Domain 3: Design High-Performing Architectures
 
 **Weight: 24%.** Matching storage, compute, database, network, and data-pipeline services to performance and scale requirements.
+
+📝 Revision notes: [Domain 3: Design High-Performing Architectures](notes/domain-3-design-high-performing-architectures.md)
 
 - [ ] **3.1 Determine high-performing and/or scalable storage solutions**
   <br>Matching object, file, and block storage (S3, EFS, EBS) and their characteristics to performance demands; hybrid storage solutions; selecting configurations that meet requirements now and scale for future needs.
@@ -115,6 +135,8 @@ Tick each topic off once you can explain it without notes. The "Must know" facts
 ### Domain 4: Design Cost-Optimized Architectures
 
 **Weight: 20%.** Cost-optimized storage, compute, database, and network designs, plus the cost-visibility tooling to govern spend.
+
+📝 Revision notes: [Domain 4: Design Cost-Optimized Architectures](notes/domain-4-design-cost-optimized-architectures.md)
 
 - [ ] **4.1 Design cost-optimized storage solutions**
   <br>Cost tooling (Cost Explorer, AWS Budgets, Cost and Usage Report, cost allocation tags, multi-account billing); S3 storage classes, lifecycle tiering, and Requester Pays; block storage volume-type economics (HDD vs SSD); choosing the lowest-cost storage service, size, migration/transfer method, and backup/archival solution; storage auto scaling.
@@ -147,7 +169,7 @@ Tick each topic off once you can explain it without notes. The "Must know" facts
 
 ## Sample questions
 
-[sample-questions.md](sample-questions.md) has 5 worked SAA-C03 questions with the answer, why each option is right or wrong, and the reasoning steps.
+[sample-questions.md](sample-questions.md) has 20 worked SAA-C03 questions with the answer, why each option is right or wrong, and the reasoning steps.
 
 ## Free resources
 
