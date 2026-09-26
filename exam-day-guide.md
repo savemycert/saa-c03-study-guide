@@ -6,7 +6,7 @@ This page covers the logistics of the AWS Certified Solutions Architect – Asso
 
 ## Booking the exam
 
-To register, sign in to aws.training, open Certification in the top navigation, choose AWS Certification Account, then Schedule New Exam. Find SAA-C03 and choose Schedule with Pearson VUE to pick a location, date, and time and pay.
+To register, sign in to aws.training, open Certification in the top navigation, choose AWS Certification Account, then Schedule New Exam. Find SAA-C03 and choose Schedule at Pearson VUE to pick a location, date, and time and pay.
 
 The exam costs 150 USD. It is offered in English, French (France), Italian, Japanese, Korean, Portuguese (Brazil), Spanish (Latin America), Spanish (Spain), Simplified Chinese, and Traditional Chinese. AWS notes that the Italian version retires after December 31, 2026.
 
