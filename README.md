@@ -157,7 +157,7 @@ Tick each topic off once you can explain it without notes. The "Must know" facts
 - [SAA-C03 practice questions](https://www.savemycert.com/practice/aws-solutions-architect-associate/?utm_source=github&utm_medium=readme&utm_campaign=saa-c03-study-guide): with an explanation on every option
 - [SAA-C03 mock exams](https://www.savemycert.com/mocks/aws-solutions-architect-associate/?utm_source=github&utm_medium=readme&utm_campaign=saa-c03-study-guide): full-length and timed
 - [SAA-C03 cheat sheet](https://www.savemycert.com/cheat-sheet/aws-solutions-architect-associate/?utm_source=github&utm_medium=readme&utm_campaign=saa-c03-study-guide): the key facts on one page
-- [All certification study guides](https://github.com/savemycert-sketch/certification-study-guides)
+- [All certification study guides](https://github.com/savemycert/certification-study-guides)
 
 ## Contributing
 
