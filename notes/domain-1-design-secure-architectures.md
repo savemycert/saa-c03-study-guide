@@ -13,18 +13,18 @@ This is the largest SAA-C03 domain. It covers who can access AWS resources and t
 - Within one account, identity-based and resource-based policies combine as a **union**: an allow in either one is enough if nothing denies.
 - **Debug cue:** "allowed but still denied" means an explicit deny in an SCP, boundary, or resource policy.
 
-| Actor needing access | Mechanism |
-|---|---|
-| Application on EC2, Lambda, or ECS | IAM role (instance profile, execution role, task role) |
-| Employees across many accounts, with an existing AD or IdP | IAM Identity Center with permission sets, federated to that source |
-| Principal in another account, broad or multi-service access | Cross-account role, assumed with `sts:AssumeRole` |
+| Actor needing access                                                                   | Mechanism                                                          |
+| -------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| Application on EC2, Lambda, or ECS                                                     | IAM role (instance profile, execution role, task role)             |
+| Employees across many accounts, with an existing AD or IdP                             | IAM Identity Center with permission sets, federated to that source |
+| Principal in another account, broad or multi-service access                            | Cross-account role, assumed with `sts:AssumeRole`                  |
 | Principal in another account that needs one resource and must keep its own permissions | Resource-based policy on the target (bucket, queue, key, function) |
-| Third-party SaaS vendor | Cross-account role whose trust policy requires an **external ID** |
-| Customers of your web or mobile app | Amazon Cognito |
+| Third-party SaaS vendor                                                                | Cross-account role whose trust policy requires an **external ID**  |
+| Customers of your web or mobile app                                                    | Amazon Cognito                                                     |
 
 - **Roles over keys:** if something can use a role, it should. STS credentials expire on their own, so there is nothing to rotate or leak. Rotating access keys more often never beats removing them.
 - **Role switching:** a modest daily identity plus an assumable privileged role (optionally MFA-gated), logged in CloudTrail.
-- **Cross-account nuance:** assuming a role *replaces* your permissions for that session, while a resource-based policy *adds* access on top of your own. A Lambda function that reads a bucket in account B and writes to a table in account A in the same run should use a bucket policy in B, not a role in B.
+- **Cross-account nuance:** assuming a role _replaces_ your permissions for that session, while a resource-based policy _adds_ access on top of your own. A Lambda function that reads a bucket in account B and writes to a table in account A in the same run should use a bucket policy in B, not a role in B.
 - **External ID** defends against the confused deputy. A vendor asking for access keys is the anti-pattern.
 - **Federation:** per-account SAML trust (`AssumeRoleWithSAML`) works, but Identity Center is the lower-overhead answer.
 - **AWS Organizations:** a management account plus member accounts, grouped into OUs designed around policy needs (Production, Sandbox, Security) rather than the org chart.
@@ -47,10 +47,10 @@ This is the largest SAA-C03 domain. It covers who can access AWS resources and t
 
 - **The route table decides the subnet type:**
 
-| Subnet | Default route | Belongs here |
-|---|---|---|
-| Public | Internet gateway | Internet-facing ALB, NAT gateways |
-| Private | NAT gateway in a public subnet | App servers (outbound-only internet) |
+| Subnet   | Default route                    | Belongs here                             |
+| -------- | -------------------------------- | ---------------------------------------- |
+| Public   | Internet gateway                 | Internet-facing ALB, NAT gateways        |
+| Private  | NAT gateway in a public subnet   | App servers (outbound-only internet)     |
 | Isolated | No internet gateway or NAT route | Databases that only talk to the app tier |
 
 - **Minimal exposure:** "app instances with public IPs" or "RDS in a public subnet" is the flaw. Move the tier inward.
@@ -73,13 +73,13 @@ This is the largest SAA-C03 domain. It covers who can access AWS resources and t
   - An **identity pool** exchanges a token for temporary AWS credentials under an IAM role, and also supports guest identities.
   - "Mobile app uploads to S3" means an identity pool. Never ship access keys inside an app.
 
-| Threat or requirement | Service |
-|---|---|
-| Layer 3/4 DDoS (SYN flood, UDP reflection) | Shield Standard (automatic); Shield Advanced for a response team and cost protection |
-| SQL injection, XSS, rate abuse | AWS WAF on CloudFront, ALB, API Gateway, or AppSync |
-| Compromised instance, crypto-mining, suspicious API calls | GuardDuty (reads CloudTrail, VPC Flow Logs, DNS logs) |
-| PII sitting in S3 | Macie |
-| Credentials hard-coded in code | IAM roles plus Secrets Manager or Parameter Store |
+| Threat or requirement                                     | Service                                                                              |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Layer 3/4 DDoS (SYN flood, UDP reflection)                | Shield Standard (automatic); Shield Advanced for a response team and cost protection |
+| SQL injection, XSS, rate abuse                            | AWS WAF on CloudFront, ALB, API Gateway, or AppSync                                  |
+| Compromised instance, crypto-mining, suspicious API calls | GuardDuty (reads CloudTrail, VPC Flow Logs, DNS logs)                                |
+| PII sitting in S3                                         | Macie                                                                                |
+| Credentials hard-coded in code                            | IAM roles plus Secrets Manager or Parameter Store                                    |
 
 - **Layer traps:** WAF for a SYN flood, GuardDuty for PII, Macie for intrusions. GuardDuty detects; it does not block.
 - **Secrets:**
@@ -103,13 +103,13 @@ This is the largest SAA-C03 domain. It covers who can access AWS resources and t
 - **Envelope encryption:** KMS wraps a data key that encrypts the data locally, so disabling one KMS key cuts off everything it protects.
 - **KMS vs CloudHSM:** choose CloudHSM only for "single-tenant", "dedicated hardware", or "AWS must never access key material". It loses any least-overhead question. A **KMS custom key store** backed by CloudHSM gives you both native service integration and dedicated HSMs.
 
-| S3 option | Choose when |
-|---|---|
-| SSE-S3 (default) | Only "encrypt at rest" is required |
+| S3 option                     | Choose when                                                    |
+| ----------------------------- | -------------------------------------------------------------- |
+| SSE-S3 (default)              | Only "encrypt at rest" is required                             |
 | SSE-KMS, customer managed key | Audit key usage, control who can decrypt, cross-account access |
-| SSE-KMS + Bucket Keys | KMS request volume is driving cost |
-| SSE-C | You supply the key on every request and S3 does the encryption |
-| Client-side | AWS must never see plaintext |
+| SSE-KMS + Bucket Keys         | KMS request volume is driving cost                             |
+| SSE-C                         | You supply the key on every request and S3 does the encryption |
+| Client-side                   | AWS must never see plaintext                                   |
 
 - **KMS permission trap:** "has `s3:GetObject` but gets access denied on some objects" means `kms:Decrypt` is missing on the key.
 - **Mandate encryption:** a bucket policy denying `PutObject` without the required encryption header.
@@ -134,15 +134,15 @@ This is the largest SAA-C03 domain. It covers who can access AWS resources and t
   - "Must not traverse the internet" calls for a VPC endpoint, not encryption.
 - **Retention mapping:**
 
-| Requirement wording | Control |
-|---|---|
-| No one, including root, may delete (regulatory) | Object Lock **compliance** mode (needs versioning) |
-| Protected, but admins need an override | Object Lock governance mode |
-| Unknown end date (litigation) | Legal hold |
-| Recover from overwrites or deletes | Versioning (optionally MFA Delete) or backups |
-| Cheaper storage as data ages | Lifecycle rules to IA or Glacier classes |
-| Copy in another Region or account | Cross-Region Replication (versioning on both buckets) |
-| Point-in-time recovery across services | AWS Backup; Vault Lock makes backups immutable |
+| Requirement wording                             | Control                                               |
+| ----------------------------------------------- | ----------------------------------------------------- |
+| No one, including root, may delete (regulatory) | Object Lock **compliance** mode (needs versioning)    |
+| Protected, but admins need an override          | Object Lock governance mode                           |
+| Unknown end date (litigation)                   | Legal hold                                            |
+| Recover from overwrites or deletes              | Versioning (optionally MFA Delete) or backups         |
+| Cheaper storage as data ages                    | Lifecycle rules to IA or Glacier classes              |
+| Copy in another Region or account               | Cross-Region Replication (versioning on both buckets) |
+| Point-in-time recovery across services          | AWS Backup; Vault Lock makes backups immutable        |
 
 - **Replication vs backup:** replication copies deletes and corruption too; backups give points in time. Seven-year retention usually pairs compliance-mode Object Lock with a lifecycle rule to Glacier.
 

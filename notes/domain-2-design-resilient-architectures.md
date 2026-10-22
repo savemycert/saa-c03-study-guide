@@ -22,13 +22,13 @@ This domain covers two jobs: decoupling components so each one scales and fails 
   - Callback task tokens handle "wait for manual approval". **Standard** workflows are long-running and auditable with exactly-once execution. **Express** workflows are high-volume, short-lived and at-least-once.
 - **API Gateway** gives clients a stable contract so the backend can change. It handles throttling, usage plans and API keys, request validation, IAM, Cognito or Lambda authorizers, and response caching. Direct service integrations (write to SQS, start Step Functions) remove glue Lambdas.
 
-| Compute | Choose when | Ruled out by |
-|---|---|---|
-| Lambda | Short, event-driven, spiky work; per-request billing | Jobs that can exceed 15 minutes; processes that never exit |
-| Fargate | Containers, long-running or over 15 minutes, no instances to manage | Need for GPUs, specific instance types or host daemons |
-| ECS on EC2 | Containers needing instance control or Spot/Reserved/Savings Plans pricing | "Least operational overhead" |
-| EKS | Kubernetes is a stated requirement (manifests, tooling, portability) | No Kubernetes requirement (ECS is simpler) |
-| EC2 | Full OS control, non-containerized legacy, host-bound licensing | Serverless or container requirements |
+| Compute    | Choose when                                                                | Ruled out by                                               |
+| ---------- | -------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| Lambda     | Short, event-driven, spiky work; per-request billing                       | Jobs that can exceed 15 minutes; processes that never exit |
+| Fargate    | Containers, long-running or over 15 minutes, no instances to manage        | Need for GPUs, specific instance types or host daemons     |
+| ECS on EC2 | Containers needing instance control or Spot/Reserved/Savings Plans pricing | "Least operational overhead"                               |
+| EKS        | Kubernetes is a stated requirement (manifests, tooling, portability)       | No Kubernetes requirement (ECS is simpler)                 |
+| EC2        | Full OS control, non-containerized legacy, host-bound licensing            | Serverless or container requirements                       |
 
 - **Containerizing a monolith as-is** (into ECS/Fargate) is the low-change first step. Microservices come later. Externalize state as part of the move.
 - **Scaling:**
@@ -42,11 +42,11 @@ This domain covers two jobs: decoupling components so each one scales and fails 
 
 ## 2.2 Design highly available and/or fault-tolerant architectures
 
-| Concept | Promise | Stem wording | Typical design |
-|---|---|---|---|
-| High availability | Recovers automatically; a brief blip is acceptable | "remain available", "recover automatically" | Multi-AZ, Auto Scaling, ELB, RDS Multi-AZ |
-| Fault tolerance | No interruption at all | "no interruption", "no downtime or data loss" | Active redundancy already running, synchronous replication |
-| Disaster recovery | Restore elsewhere after losing the environment (usually a Region) | "survive a Region outage", RTO/RPO figures | One of the four DR strategies plus Route 53 |
+| Concept           | Promise                                                           | Stem wording                                  | Typical design                                             |
+| ----------------- | ----------------------------------------------------------------- | --------------------------------------------- | ---------------------------------------------------------- |
+| High availability | Recovers automatically; a brief blip is acceptable                | "remain available", "recover automatically"   | Multi-AZ, Auto Scaling, ELB, RDS Multi-AZ                  |
+| Fault tolerance   | No interruption at all                                            | "no interruption", "no downtime or data loss" | Active redundancy already running, synchronous replication |
+| Disaster recovery | Restore elsewhere after losing the environment (usually a Region) | "survive a Region outage", RTO/RPO figures    | One of the four DR strategies plus Route 53                |
 
 - Choosing fault tolerance when HA was enough fails a cost qualifier. Choosing HA when the stem said "no interruption" fails the requirement.
 - **Single points of failure, with their fixes:**
@@ -84,7 +84,7 @@ This domain covers two jobs: decoupling components so each one scales and fails 
   - **Immutable infrastructure:** ship a new AMI or image rather than patching in place. Blue-green shifts traffic by weighted records or the load balancer, and rolling back means shifting traffic back.
   - **Service quotas** apply per account and per Region. Raise them in the DR Region before a failover needs that capacity.
   - **Throttling** (`ThrottlingException`): retry with exponential backoff and jitter, and raise the quota for the long term. Bigger instances do not help.
-  - **X-Ray** traces requests end to end and builds a service map that shows which hop adds latency or errors. CloudWatch shows *that* a service is unhealthy. X-Ray pinpoints *which hop* of the request is failing.
+  - **X-Ray** traces requests end to end and builds a service map that shows which hop adds latency or errors. CloudWatch shows _that_ a service is unhealthy. X-Ray pinpoints _which hop_ of the request is failing.
 
 📖 Full lesson: [AWS High Availability and Disaster Recovery: RTO, RPO, and the Four DR Levels](https://www.savemycert.com/revision/aws-solutions-architect-associate/aws-high-availability-disaster-recovery/?utm_source=github&utm_medium=readme&utm_campaign=saa-c03-study-guide)
 
